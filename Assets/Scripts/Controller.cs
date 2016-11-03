@@ -8,6 +8,7 @@ public class Controller : MonoBehaviour {
 	[SerializeField] private TargetScript targetPrefab;
 	[SerializeField] private Text livesText;
 	[SerializeField] private Text matterText;
+	[SerializeField] private Text winText;
 
 	private float offsetX = 3.0f;
 	private float offsetZ = 5.0f;
@@ -61,6 +62,10 @@ public class Controller : MonoBehaviour {
 		matterText.text = "Matter: " + matter;
 		livesText.text = "Lives: " + lives;
 		matterText.text = "Matter: " + matter;
+	}
+
+	public void win(){
+		winText.text = "YOU WIN";
 	}
 		
 }

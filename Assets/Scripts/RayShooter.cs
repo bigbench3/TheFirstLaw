@@ -46,6 +46,9 @@ public class RayShooter : MonoBehaviour {
 //					selectedObject = col.gameObject;
 					Destroy (col.gameObject);
 				}
+				if (tag == "Relic") {
+					controller.win ();
+				}
             }
         }
 		//shoot stuff
