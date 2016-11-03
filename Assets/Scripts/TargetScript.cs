@@ -26,8 +26,6 @@ public class TargetScript : MonoBehaviour {
 			string text = score.text.Substring(6);
 			int intScore = int.Parse (text);
 			intScore += 100;
-			controller.setScore (intScore);
-			score.text = "Score: " + intScore.ToString();
 
 			Destroy (this.gameObject);
 		}

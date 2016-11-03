@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MovingEnemy : MonoBehaviour {
-	[SerializeField] private Text score;
-
 	public float speed = 12.5f;
-	public float range = 3f;
+	public float range = 1000f;
 	private float chanceToChangeDirection = 0.03f;
 	private Vector3 maxPos;
 	private Vector3 minPos;
@@ -62,24 +61,18 @@ public class MovingEnemy : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate(){
-		float rand = Random.Range (0.0f, 2.0f);
-		if(rand < chanceToChangeDirection){
-			speed = -speed;
-		}
-	}
+//	void FixedUpdate(){
+//		float rand = Random.Range (0.0f, 2.0f);
+//		if(rand < chanceToChangeDirection){
+//			speed = -speed;
+//		}
+//	}
 
 	void OnCollisionEnter(Collision col){
 		GameObject obj = col.gameObject;
-
-		if(obj.tag == "Bullet"){
-			string text = score.text.Substring(6);
-			int intScore = int.Parse (text);
-			intScore += 500;
-			controller.setScore (intScore);
-			score.text = "Score: " + intScore.ToString();
-
-			Destroy (this.gameObject);
+		if (obj.tag == "Player") {
+			controller.setLives (0);
+			SceneManager.LoadScene ("Level1");
 		}
 	}
 }

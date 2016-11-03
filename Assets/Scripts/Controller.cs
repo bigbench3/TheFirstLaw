@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Controller : MonoBehaviour {
 	
 	[SerializeField] private TargetScript targetPrefab;
-	[SerializeField] private Text scoreText;
 	[SerializeField] private Text livesText;
 	[SerializeField] private Text matterText;
 
@@ -35,8 +34,7 @@ public class Controller : MonoBehaviour {
 			float posZ = -(offsetX * i) + startPos.z;
 			target.transform.position = new Vector3 (startPos.x, startPos.y, posZ);
 		}
-
-		scoreText.text = "Score: " + score;
+			
 		livesText.text = "Lives: " + lives;
 		matterText.text = "Matter: " + matter;
 	}
@@ -45,12 +43,9 @@ public class Controller : MonoBehaviour {
 	void Update () {
 	}
 
-	public void setScore(int newScore){
-		score = newScore;
-	}
-
 	public void setLives(int newLives){
 		lives = newLives;
+		UpdateUI();
 	}
 
 	public void setMatter(float newMatter){
@@ -64,8 +59,8 @@ public class Controller : MonoBehaviour {
 
 	public void UpdateUI(){
 		matterText.text = "Matter: " + matter;
-//		livesText.text = "Lives: " + lives;
-//		matterText.text = "Matter: " + matter;
+		livesText.text = "Lives: " + lives;
+		matterText.text = "Matter: " + matter;
 	}
 		
 }

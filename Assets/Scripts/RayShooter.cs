@@ -9,6 +9,7 @@ public class RayShooter : MonoBehaviour {
 	protected Controller controller;
 	[SerializeField] public GameObject selectedObject;
 	private GameObject currentObj;
+	private float currentVolume;
 
     void Start() {
         camera = GetComponent<Camera>();
@@ -21,6 +22,12 @@ public class RayShooter : MonoBehaviour {
 
     void Update() {
 		float scaleValue = Input.GetAxis ("Mouse ScrollWheel");
+		Collider collider;
+		float matter = controller.getMatter ();
+
+		if(currentObj != null) {
+			collider = currentObj.GetComponent<Collider> ();
+		}
 
 		//eat stuff
         if (Input.GetMouseButtonDown(1)) {
@@ -33,7 +40,8 @@ public class RayShooter : MonoBehaviour {
 				string tag = col.gameObject.tag;
 				if(tag == "SquareMatter"){
 					Vector3 size = col.bounds.size;
-					controller.setMatter (size.x*size.y*size.z);
+					controller.setMatter (size.x * size.y * size.z);
+					currentVolume = 1;
 //					AddType ();
 //					selectedObject = col.gameObject;
 					Destroy (col.gameObject);
@@ -56,16 +64,27 @@ public class RayShooter : MonoBehaviour {
 		}
 
 		//scale stuff
-		if(scaleValue > 0){
+		if(scaleValue > 0 && matter > 1){
+			collider = currentObj.GetComponent<Collider> ();
 			currentObj.transform.localScale += new Vector3(0.1F, 0.1f, 0.1f);
-		} else if (scaleValue < 0){
+			Vector3 newSize = collider.bounds.size;
+			float newVolume = newSize.x * newSize.y * newSize.z;
+			Debug.Log ("newVolume :" + newVolume + " Matter:" + (currentVolume - newVolume));
+			controller.setMatter (currentVolume - newVolume);
+			currentVolume = newVolume;
+		} else if (scaleValue < 0 && currentVolume > 1){
+			collider = currentObj.GetComponent<Collider> ();
 			currentObj.transform.localScale -= new Vector3(0.1F, 0.1f, 0.1f);
+			Vector3 newSize = collider.bounds.size;
+			float newVolume = newSize.x * newSize.y * newSize.z;
+			Debug.Log ("Current Volume: " + currentVolume + " New Volume: " + newVolume + " Matter: " + (currentVolume - newVolume));
+			controller.setMatter (currentVolume - newVolume);
+			currentVolume = newVolume;
 		}
     }
 
     private void Shoot(Vector3 position) {
 		GameObject bullet = Instantiate (selectedObject);
-		Debug.Log ("shoot");
         
 		Collider col = bullet.GetComponent<Collider> ();
 		Vector3 size = col.bounds.size;
