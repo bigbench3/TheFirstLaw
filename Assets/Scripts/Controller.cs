@@ -30,10 +30,11 @@ public class Controller : MonoBehaviour {
 
 	public void addMatter(float newMatter){
 		matter += newMatter;
+        float printMatter = Mathf.Round(matter);
 		if(matter < 0){
 			matterText.text = "Matter: " + 0;
 		} else {
-			matterText.text = "Matter: " + matter;
+			matterText.text = "Matter: " + printMatter;
 		}
 
 	}
