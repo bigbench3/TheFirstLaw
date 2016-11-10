@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class FPSInput : MonoBehaviour {
-    public float speed = 6.0f;
+	public const float BASE_SPEED = 6.0f;
+
+    public float speed;
     public float gravity = -9.8f;
     public float jumpSpeed = 100;
     public float vertSpeed = 0;
@@ -28,6 +30,13 @@ public class FPSInput : MonoBehaviour {
         } else {
             vertSpeed += gravity;
         }
+		if (Input.GetButton ("LeftStick")||Input.GetButton("Run")) {
+			Debug.Log ("Left Stick pressed");
+			speed = BASE_SPEED*2;
+
+		} else {
+			speed = BASE_SPEED;
+		}
 
         movement = new Vector3(deltaX, vertSpeed, deltaZ);
         movement *= Time.deltaTime;

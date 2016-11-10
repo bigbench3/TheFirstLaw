@@ -71,7 +71,6 @@ public class MovingEnemy : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		GameObject obj = col.gameObject;
 		if (obj.tag == "Player") {
-			controller.setLives (0);
 			SceneManager.LoadScene ("Level1");
 		}
 	}

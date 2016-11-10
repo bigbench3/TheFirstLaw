@@ -10,6 +10,8 @@ public class RayShooter : MonoBehaviour {
 	[SerializeField] public GameObject selectedObject;
 	private GameObject currentObj;
 	private float currentVolume;
+	private bool lastvalue = false;
+	private Collider collider = null;
 
     void Start() {
         camera = GetComponent<Camera>();
@@ -22,7 +24,6 @@ public class RayShooter : MonoBehaviour {
 
     void Update() {
 		float scaleValue = Input.GetAxis ("Mouse ScrollWheel");
-		Collider collider;
 		float matter = controller.getMatter ();
 
 		if(currentObj != null) {
@@ -30,7 +31,8 @@ public class RayShooter : MonoBehaviour {
 		}
 
 		//eat stuff
-        if (Input.GetMouseButtonDown(1)) {
+		if (Input.GetMouseButtonDown(1)|| Input.GetAxis("LeftTrigger") == 1) {
+			
             Vector3 origin = new Vector3(camera.pixelWidth / 2,camera.pixelHeight / 2,0);
 			Vector3 pos = transform.position;
             Ray ray = camera.ScreenPointToRay(origin);
@@ -40,7 +42,7 @@ public class RayShooter : MonoBehaviour {
 				string tag = col.gameObject.tag;
 				if(tag == "SquareMatter"){
 					Vector3 size = col.bounds.size;
-					controller.setMatter (size.x * size.y * size.z);
+					controller.addMatter (size.x * size.y * size.z);
 					currentVolume = 1;
 //					AddType ();
 //					selectedObject = col.gameObject;
@@ -50,9 +52,11 @@ public class RayShooter : MonoBehaviour {
 					controller.win ();
 				}
             }
+
         }
+
 		//shoot stuff
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) || (Input.GetAxis("RightTrigger") == 1 && !lastvalue)) {
 //			if (selectedObject != null && controller.getMatter() > 0){
 				Vector3 origin = new Vector3 (camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
 				Vector3 pos = transform.position;
@@ -64,26 +68,39 @@ public class RayShooter : MonoBehaviour {
 
 //				}
 			}
+
+		}
+
+		lastvalue = (Input.GetAxis("RightTrigger") == 1);
+		if(Input.GetButton("ControllerYUp")) {
+			Debug.Log("y button pressed");
+			scaleValue += 1;
+		}
+		if(Input.GetButton("ControllerBDown")) {
+			Debug.Log("b button pressed");
+			scaleValue -= 1;
 		}
 
 		//scale stuff
-		if(scaleValue > 0 && matter > 1){
-			collider = currentObj.GetComponent<Collider> ();
-			currentObj.transform.localScale += new Vector3(0.1F, 0.1f, 0.1f);
-			Vector3 newSize = collider.bounds.size;
-			float newVolume = newSize.x * newSize.y * newSize.z;
-			Debug.Log ("newVolume :" + newVolume + " Matter:" + (currentVolume - newVolume));
-			controller.setMatter (currentVolume - newVolume);
-			currentVolume = newVolume;
-		} else if (scaleValue < 0 && currentVolume > 1){
-			collider = currentObj.GetComponent<Collider> ();
-			currentObj.transform.localScale -= new Vector3(0.1F, 0.1f, 0.1f);
-			Vector3 newSize = collider.bounds.size;
-			float newVolume = newSize.x * newSize.y * newSize.z;
-			Debug.Log ("Current Volume: " + currentVolume + " New Volume: " + newVolume + " Matter: " + (currentVolume - newVolume));
-			controller.setMatter (currentVolume - newVolume);
-			currentVolume = newVolume;
+		if(collider != null){
+			Vector3 scaled = currentObj.transform.localScale + new Vector3 (0.1F, 0.1f, 0.1f);
+			Vector3 current = currentObj.transform.localScale;
+			float diffVol = (scaled.x - current.x) * (scaled.y - current.y) * (scaled.z - current.z);
+			if(scaleValue > 0 && matter > diffVol){
+				currentObj.transform.localScale += new Vector3(0.1F, 0.1f, 0.1f);
+				Vector3 newSize = collider.bounds.size;
+				float newVolume = newSize.x * newSize.y * newSize.z;
+				controller.addMatter (currentVolume - newVolume);
+				currentVolume = newVolume;
+			} else if (scaleValue < 0 && currentVolume > 1){
+				currentObj.transform.localScale -= new Vector3(0.1F, 0.1f, 0.1f);
+				Vector3 newSize = collider.bounds.size;
+				float newVolume = newSize.x * newSize.y * newSize.z;
+				controller.addMatter (currentVolume - newVolume);
+				currentVolume = newVolume;
+			}
 		}
+
     }
 
     private void Shoot(Vector3 position) {
@@ -93,7 +110,7 @@ public class RayShooter : MonoBehaviour {
 		Vector3 size = col.bounds.size;
 		float sizef = size.x * size.y * size.z;
 		if (controller.getMatter () > sizef) {
-			controller.setMatter (-sizef);
+			controller.addMatter (-sizef);
 			bullet.transform.position = position;
 			currentObj = bullet;
 		} else {
