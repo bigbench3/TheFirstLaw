@@ -14,7 +14,7 @@ public abstract class Shape : MonoBehaviour {
     void Start() {
         controllerObject = GameObject.Find("Controller");
         controller = controllerObject.GetComponent<Controller>();
-        matter = controller.getMatter();
+        matter = controller.GetMatter();
         currentVolume = 1;
     }
 
@@ -35,17 +35,17 @@ public abstract class Shape : MonoBehaviour {
         Vector3 current = currentObj.transform.localScale;
         float newVolume = FindVolume(scaled);
         float diffMatter = newVolume - FindVolume(current);
-        matter = controller.getMatter();
+        matter = controller.GetMatter();
         Debug.Log("Diff in matter: " + diffMatter + " and current matter is: " + matter);
 
         if (scaleValue > 0 && matter > diffMatter) {
             currentObj.transform.localScale += new Vector3(0.1F, 0.1f, 0.1f);
-            controller.addMatter(currentVolume - newVolume);
-            matter = controller.getMatter();
+            controller.AddMatter(currentVolume - newVolume);
+            matter = controller.GetMatter();
         } else if (scaleValue < 0 && currentVolume > 1) {
             currentObj.transform.localScale -= new Vector3(0.1F, 0.1f, 0.1f);
-            controller.addMatter(currentVolume - newVolume);
-            matter = controller.getMatter();
+            controller.AddMatter(currentVolume - newVolume);
+            matter = controller.GetMatter();
         }
 
         currentVolume = newVolume;

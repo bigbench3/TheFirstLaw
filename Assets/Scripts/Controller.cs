@@ -11,10 +11,12 @@ public class Controller : MonoBehaviour {
 	[SerializeField] private Text matterText;
 	[SerializeField] private Text winText;
 	private float matter;
+    private ArrayList shapes;
 
 	// Use this for initialization
 	void Start () {
 		matterText.text = "Matter: " + matter;
+        shapes = new ArrayList();
 	}
 	
 	// Update is called once per frame
@@ -22,12 +24,12 @@ public class Controller : MonoBehaviour {
 	
 	}
 
-	public void setMatter(float newMatter){
+	public void SetMatter(float newMatter){
 		matter = newMatter;
 		matterText.text = "Matter: " + matter;
 	}
 
-	public void addMatter(float newMatter){
+	public void AddMatter(float newMatter){
 		matter += newMatter;
         float printMatter = Mathf.Round(matter);
 		if(matter < 0){
@@ -38,12 +40,17 @@ public class Controller : MonoBehaviour {
 
 	}
 
-	public float getMatter(){
+	public float GetMatter(){
 		return matter;
 	}
 
-	public void win(){
+	public void Win(){
 		winText.text = "YOU WIN";
 	}
-		
+	
+    public void AddType(string shape) {
+        if (!shapes.Contains(shape)) {
+            shapes.Add(shape);
+        }
+    }	
 }

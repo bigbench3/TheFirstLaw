@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class Square : Shape {
+public class Cube : Shape {
 
     //Given the Vector3 containning the size in the x, y, and z directions calulates 
     //the volume of the square and returns it

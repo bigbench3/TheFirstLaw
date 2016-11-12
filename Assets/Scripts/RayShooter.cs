@@ -15,24 +15,26 @@ public class RayShooter : MonoBehaviour {
 	private Collider collider = null;
     private Shape shape;
 
+    //Initializes the class
     void Start() {
         camera = GetComponent<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
 
 		controllerObject = GameObject.Find ("Controller");
 		controller = controllerObject.GetComponent<Controller>();
-
     }
 
+    //Checks for user input that would shoot, absorb or scale an object
     void Update() {
 		float scaleValue = Input.GetAxis ("Mouse ScrollWheel");
-		float matter = controller.getMatter ();
+		float matter = controller.GetMatter ();
 
 		if(currentObj != null) {
 			collider = currentObj.GetComponent<Collider> ();
 		}
 
-		//eat stuff
+		//Causes the gameObject the user is looking at to be absorb if it is a shape or relic then adds the
+        //volume of said shape to the players matter meter
 		if (Input.GetMouseButtonDown(1)|| Input.GetAxis("LeftTrigger") == 1) {
 			
             Vector3 origin = new Vector3(camera.pixelWidth / 2,camera.pixelHeight / 2,0);
@@ -47,18 +49,19 @@ public class RayShooter : MonoBehaviour {
                     GameObject obj = col.gameObject;
                     shape = obj.GetComponent<Shape>();
                     Vector3 size = col.bounds.size;
-                    controller.addMatter(shape.FindVolume(size));
+                    controller.AddMatter(shape.FindVolume(size));
+                    controller.AddType(shape.GetShape());
                     Destroy (obj);
                 }
 
 				if (tag == "Relic") {
-					controller.win ();
+					controller.Win ();
 				}
             }
 
         }
 
-		//shoot stuff
+		//Spawns the selected shape at the location the user is looking
 		if (Input.GetMouseButtonDown (0) || (Input.GetAxis("RightTrigger") == 1 && !lastvalue)) {
 			Vector3 origin = new Vector3 (camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
 			Vector3 pos = transform.position;
@@ -77,12 +80,13 @@ public class RayShooter : MonoBehaviour {
 			Debug.Log("y button pressed");
 			scaleValue += 1;
 		}
+
 		if(Input.GetButton("ControllerBDown")) {
 			Debug.Log("b button pressed");
 			scaleValue -= 1;
 		}
 
-		//scale stuff
+		//Scales the last placed object up or down depending on user input
         if (collider != null) {
             if(scaleValue != 0) {
                 shape.Scale(collider, scaleValue);
@@ -97,8 +101,8 @@ public class RayShooter : MonoBehaviour {
 		Collider col = bullet.GetComponent<Collider> ();
 		Vector3 size = col.bounds.size;
 		float sizef = size.x * size.y * size.z;
-		if (controller.getMatter () > sizef) {
-			controller.addMatter (-sizef);
+		if (controller.GetMatter () > sizef) {
+			controller.AddMatter (-sizef);
 			bullet.transform.position = position;
 			currentObj = bullet;
 		} else {

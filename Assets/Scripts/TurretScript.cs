@@ -12,7 +12,6 @@ public class TurretScript : MonoBehaviour {
     void Start () {
 		target = GameObject.Find ("Player").transform;
 //		InvokeRepeating ("Shoot", SHOOT_DELAY, SHOOT_DELAY);
-//		Debug.Log ("FUCK");
 	}
 	
 	// Update is called once per frame
