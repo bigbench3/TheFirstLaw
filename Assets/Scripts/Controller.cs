@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//Ben Hay (c) 2016
+
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -8,9 +10,6 @@ public class Controller : MonoBehaviour {
 	[SerializeField] private TargetScript targetPrefab;
 	[SerializeField] private Text matterText;
 	[SerializeField] private Text winText;
-
-	private float offsetX = 3.0f;
-	private float offsetZ = 5.0f;
 	private float matter;
 
 	// Use this for initialization

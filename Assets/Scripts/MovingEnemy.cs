@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class MovingEnemy : MonoBehaviour {
 	public float speed = 12.5f;
 	public float range = 500f;
-	private float chanceToChangeDirection = 0.03f;
 	private Vector3 maxPos;
 	private Vector3 minPos;
 	private bool inX;

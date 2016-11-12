@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿//Ben Hay, Alex Zeterga, Colin Hiriak (c) 2016
+
+using UnityEngine;
 using System.Collections;
 
 public class RayShooter : MonoBehaviour {
@@ -9,9 +11,9 @@ public class RayShooter : MonoBehaviour {
 	protected Controller controller;
 	[SerializeField] public GameObject selectedObject;
 	private GameObject currentObj;
-	private float currentVolume;
 	private bool lastvalue = false;
 	private Collider collider = null;
+    private Shape shape;
 
     void Start() {
         camera = GetComponent<Camera>();
@@ -40,14 +42,15 @@ public class RayShooter : MonoBehaviour {
             if (Physics.Raycast(ray, out hit)) {
 				Collider col = hit.collider;
 				string tag = col.gameObject.tag;
-				if(tag == "SquareMatter"){
-					Vector3 size = col.bounds.size;
-					controller.addMatter (size.x * size.y * size.z);
-					currentVolume = 1;
-//					AddType ();
-//					selectedObject = col.gameObject;
-					Destroy (col.gameObject);
-				}
+
+                if (tag == "Shape") {
+                    GameObject obj = col.gameObject;
+                    shape = obj.GetComponent<Shape>();
+                    Vector3 size = col.bounds.size;
+                    controller.addMatter(shape.FindVolume(size));
+                    Destroy (obj);
+                }
+
 				if (tag == "Relic") {
 					controller.win ();
 				}
@@ -57,16 +60,14 @@ public class RayShooter : MonoBehaviour {
 
 		//shoot stuff
 		if (Input.GetMouseButtonDown (0) || (Input.GetAxis("RightTrigger") == 1 && !lastvalue)) {
-//			if (selectedObject != null && controller.getMatter() > 0){
-				Vector3 origin = new Vector3 (camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
-				Vector3 pos = transform.position;
-				Ray ray = camera.ScreenPointToRay (origin);
-				RaycastHit hit;
-				if (Physics.Raycast (ray, out hit)) {
-					Collider col = hit.collider;
-					Shoot (hit.point);
+			Vector3 origin = new Vector3 (camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
+			Vector3 pos = transform.position;
+			Ray ray = camera.ScreenPointToRay (origin);
+			RaycastHit hit;
 
-//				}
+            if (Physics.Raycast (ray, out hit)) {
+				Collider col = hit.collider;
+				Shoot (hit.point);
 			}
 
 		}
@@ -82,24 +83,11 @@ public class RayShooter : MonoBehaviour {
 		}
 
 		//scale stuff
-		if(collider != null){
-			Vector3 scaled = currentObj.transform.localScale + new Vector3 (0.1F, 0.1f, 0.1f);
-			Vector3 current = currentObj.transform.localScale;
-			float diffVol = (scaled.x - current.x) * (scaled.y - current.y) * (scaled.z - current.z);
-			if(scaleValue > 0 && matter > diffVol){
-				currentObj.transform.localScale += new Vector3(0.1F, 0.1f, 0.1f);
-				Vector3 newSize = collider.bounds.size;
-				float newVolume = newSize.x * newSize.y * newSize.z;
-				controller.addMatter (currentVolume - newVolume);
-				currentVolume = newVolume;
-			} else if (scaleValue < 0 && currentVolume > 1){
-				currentObj.transform.localScale -= new Vector3(0.1F, 0.1f, 0.1f);
-				Vector3 newSize = collider.bounds.size;
-				float newVolume = newSize.x * newSize.y * newSize.z;
-				controller.addMatter (currentVolume - newVolume);
-				currentVolume = newVolume;
-			}
-		}
+        if (collider != null) {
+            if(scaleValue != 0) {
+                shape.Scale(collider, scaleValue);
+            }
+        }
 
     }
 
