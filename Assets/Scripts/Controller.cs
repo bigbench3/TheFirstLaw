@@ -7,22 +7,20 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour {
 	
-	[SerializeField] private TargetScript targetPrefab;
 	[SerializeField] private Text matterText;
 	[SerializeField] private Text winText;
 	private float matter;
     private ArrayList shapes;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		matterText.text = "Matter: " + matter;
         shapes = new ArrayList();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+    }
 
 	public void SetMatter(float newMatter){
 		matter = newMatter;
@@ -47,10 +45,4 @@ public class Controller : MonoBehaviour {
 	public void Win(){
 		winText.text = "YOU WIN";
 	}
-	
-    public void AddType(string shape) {
-        if (!shapes.Contains(shape)) {
-            shapes.Add(shape);
-        }
-    }	
 }

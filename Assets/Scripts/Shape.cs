@@ -21,6 +21,7 @@ public abstract class Shape : MonoBehaviour {
     //Abstract method to be implemented by subclasses that returns a string containning
     //the shape of the object
     public abstract string GetShape ();
+    public abstract GameObject GetPrefab();
 
     //Abstract method to be implemented by subclasses that returns a float denotting the volume
     //of the shape given a Vector3
