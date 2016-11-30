@@ -15,6 +15,7 @@ public class RayShooter : MonoBehaviour {
 	private Collider collider = null;
     private Shape shape;
     private ArrayList shapes;
+	private ArrayList typeOfShapes;
     private float initVol;
     private int index;
     private int listSize;
@@ -28,6 +29,7 @@ public class RayShooter : MonoBehaviour {
 		controller = controllerObject.GetComponent<Controller>();
         initVol = 1;
         shapes = new ArrayList();
+		typeOfShapes = new ArrayList ();
         index = 0;
         listSize = 0;
     }
@@ -54,13 +56,18 @@ public class RayShooter : MonoBehaviour {
 
                 if (tag == "Shape") {
                     GameObject obj = col.gameObject;
+					obj.transform.eulerAngles = new Vector3 (0,0,0);
                     shape = obj.GetComponent<Shape>();
                     Vector3 size = col.bounds.size;
                     controller.AddMatter(shape.FindVolume(size));
+					GameObject prefab = shape.GetPrefab ();
+					string nameOfShape = shape.GetShape ();
 
-                    if (!shapes.Contains(shape.GetPrefab())) {
-                        shapes.Add(shape.GetPrefab());
+					if (!typeOfShapes.Contains(nameOfShape)) {
+						shapes.Add(prefab);
+						typeOfShapes.Add (nameOfShape);
                         listSize++;
+						Debug.Log (listSize);
                     }
 
                     Destroy(obj);
@@ -110,12 +117,13 @@ public class RayShooter : MonoBehaviour {
                     GameObject obj = (GameObject)shapes[index];
                     Shape test = obj.GetComponent<Shape>();
                     Debug.Log("Index was increased, the shape is: " + test.GetShape());
-                } else {
-                    index = 0;
-                    GameObject obj = (GameObject)shapes[index];
-                    Shape test = obj.GetComponent<Shape>();
-                    Debug.Log("Index couldn't be increased, looped to beginning of list and the shape is: " + test.GetShape());
-                }
+                } 
+//				else {
+//                    index = 0;
+//                    GameObject obj = (GameObject)shapes[index];
+//                    Shape test = obj.GetComponent<Shape>();
+//                    Debug.Log("Index couldn't be increased, looped to beginning of list and the shape is: " + test.GetShape());
+//                }
             }
         }
 
@@ -127,12 +135,13 @@ public class RayShooter : MonoBehaviour {
                     GameObject obj = (GameObject)shapes[index];
                     Shape test = obj.GetComponent<Shape>();
                     Debug.Log("Index was decreased, the shape is: " + test.GetShape());
-                } else {
-                    index = listSize - 1;
-                    GameObject obj = (GameObject)shapes[index];
-                    Shape test = obj.GetComponent<Shape>();
-                    Debug.Log("Index couldn't be decreased, looped to end of list and the shape is: " + test.GetShape());
-                }
+                } 
+//				else {
+//                    index = listSize - 1;
+//                    GameObject obj = (GameObject)shapes[index];
+//                    Shape test = obj.GetComponent<Shape>();
+//                    Debug.Log("Index couldn't be decreased, looped to end of list and the shape is: " + test.GetShape());
+//                }
             }
         }
     }
