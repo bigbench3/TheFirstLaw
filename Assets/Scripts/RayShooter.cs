@@ -6,7 +6,6 @@ using System.Collections;
 public class RayShooter : MonoBehaviour {
 
     private Camera camera;
-	[SerializeField] private Bullet bulletPrefab;
 	protected GameObject controllerObject;
 	protected Controller controller;
 	[SerializeField] public GameObject cube;
@@ -18,6 +17,7 @@ public class RayShooter : MonoBehaviour {
     private ArrayList shapes;
     private float initVol;
     private int index;
+    private int listSize;
 
     //Initializes the class
     void Start() {
@@ -29,6 +29,7 @@ public class RayShooter : MonoBehaviour {
         initVol = 1;
         shapes = new ArrayList();
         index = 0;
+        listSize = 0;
     }
 
     void Update() {
@@ -59,6 +60,7 @@ public class RayShooter : MonoBehaviour {
 
                     if (!shapes.Contains(shape.GetPrefab())) {
                         shapes.Add(shape.GetPrefab());
+                        listSize++;
                     }
 
                     Destroy(obj);
@@ -101,13 +103,38 @@ public class RayShooter : MonoBehaviour {
             }
         }
 
-//        if (Input.GetKeyDown("PreviousShape")) {
-//
-//        }
-//
-//        if (Input.GetKeyDown("NextShape")) {
-//
-//        }
+        if (Input.GetButton("NextObject")) {
+            if(listSize != 0) {
+                if (index < listSize - 1) {
+                    index++;
+                    GameObject obj = (GameObject)shapes[index];
+                    Shape test = obj.GetComponent<Shape>();
+                    Debug.Log("Index was increased, the shape is: " + test.GetShape());
+                } else {
+                    index = 0;
+                    GameObject obj = (GameObject)shapes[index];
+                    Shape test = obj.GetComponent<Shape>();
+                    Debug.Log("Index couldn't be increased, looped to beginning of list and the shape is: " + test.GetShape());
+                }
+            }
+        }
+
+        if (Input.GetButton("PreviousObject")) {
+            Debug.Log("Previous Object");
+            if (listSize != 0) {
+                if (index > 0) {
+                    index--;
+                    GameObject obj = (GameObject)shapes[index];
+                    Shape test = obj.GetComponent<Shape>();
+                    Debug.Log("Index was decreased, the shape is: " + test.GetShape());
+                } else {
+                    index = listSize - 1;
+                    GameObject obj = (GameObject)shapes[index];
+                    Shape test = obj.GetComponent<Shape>();
+                    Debug.Log("Index couldn't be decreased, looped to end of list and the shape is: " + test.GetShape());
+                }
+            }
+        }
     }
 
     public void Shoot(Vector3 position) {
@@ -120,9 +147,6 @@ public class RayShooter : MonoBehaviour {
 		} else {
 			Destroy (bullet);
 		}
-//        bullet.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
-//        yield return new WaitForSeconds(1);
-//		  bullet.Remove();
     }
 }
 
