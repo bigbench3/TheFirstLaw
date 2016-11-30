@@ -56,6 +56,7 @@ public class RayShooter : MonoBehaviour {
 
                 if (tag == "Shape") {
                     GameObject obj = col.gameObject;
+					//Zeros the rotation to calculate the size properly
 					obj.transform.eulerAngles = new Vector3 (0,0,0);
                     shape = obj.GetComponent<Shape>();
                     Vector3 size = col.bounds.size;
@@ -63,6 +64,7 @@ public class RayShooter : MonoBehaviour {
 					GameObject prefab = shape.GetPrefab ();
 					string nameOfShape = shape.GetShape ();
 
+					//If the shape isn't already in your arsenal of shapes, add the prefab for it
 					if (!typeOfShapes.Contains(nameOfShape)) {
 						shapes.Add(prefab);
 						typeOfShapes.Add (nameOfShape);
