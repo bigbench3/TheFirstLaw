@@ -61,6 +61,7 @@ public class RayShooter : MonoBehaviour {
                     shape = obj.GetComponent<Shape>();
                     Vector3 size = col.bounds.size;
                     controller.AddMatter(shape.FindVolume(size));
+					Debug.Log (shape.FindVolume (size));
 					GameObject prefab = shape.GetPrefab ();
 					string nameOfShape = shape.GetShape ();
 
@@ -150,7 +151,7 @@ public class RayShooter : MonoBehaviour {
 
     public void Shoot(Vector3 position) {
 		GameObject bullet = Instantiate ((GameObject)shapes[index]);
-        
+		Shape test = bullet.GetComponent<Shape> ();
 		if (controller.GetMatter () > initVol) {
 			controller.AddMatter (-initVol);
 			bullet.transform.position = position;
