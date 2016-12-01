@@ -1,0 +1,30 @@
+{
+    "format": {
+        "version": "1.0"
+    },
+    "shaders": {
+        "Main shader": {
+            "parameters": {
+                "ao_intensity": 0.6600000262260437,
+                "emissive_intensity": 0.14000000059604645,
+                "height_force": 1.2699999809265137,
+                "nbSamples": 16
+            },
+            "shader": "pbr-metal-rough"
+        },
+        "Main shader (Copy)": {
+            "parameters": {
+                "ao_intensity": 0.6600000262260437,
+                "emissive_intensity": 0.14000000059604645,
+                "height_force": 1.2699999809265137,
+                "nbSamples": 16
+            },
+            "shader": "pbr-metal-rough"
+        }
+    },
+    "texturesets": {
+        "Crate": {
+            "shader": "Main shader"
+        }
+    }
+}
