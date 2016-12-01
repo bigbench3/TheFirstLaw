@@ -52,8 +52,10 @@
      <Compile Include="Assets\Scripts\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\FPSInput.cs" />
+     <Compile Include="Assets\Scripts\LaserBoltScript.cs" />
      <Compile Include="Assets\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Scripts\MovingEnemy.cs" />
+     <Compile Include="Assets\Scripts\PewPewScript.cs" />
      <Compile Include="Assets\Scripts\RayShooter.cs" />
      <Compile Include="Assets\Scripts\Shape.cs" />
      <Compile Include="Assets\Scripts\Sphere.cs" />
