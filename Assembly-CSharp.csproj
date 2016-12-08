@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\FuturisticSciFiDoors\SciFiDoors\Scripts\OpenDoors.cs" />
      <Compile Include="Assets\Scripts\Bullet.cs" />
      <Compile Include="Assets\Scripts\Controller.cs" />
      <Compile Include="Assets\Scripts\Cube.cs" />
@@ -56,11 +57,13 @@
      <Compile Include="Assets\Scripts\MouseLook.cs" />
      <Compile Include="Assets\Scripts\MovingEnemy.cs" />
      <Compile Include="Assets\Scripts\PewPewScript.cs" />
+     <Compile Include="Assets\Scripts\PressurePlate.cs" />
      <Compile Include="Assets\Scripts\RayShooter.cs" />
      <Compile Include="Assets\Scripts\Shape.cs" />
      <Compile Include="Assets\Scripts\Sphere.cs" />
      <Compile Include="Assets\Scripts\TargetScript.cs" />
      <Compile Include="Assets\Scripts\TurretScript.cs" />
+     <None Include="Assets\FuturisticSciFiDoors\SciFiDoors\SciFiFuturisticDoors.txt" />
      <None Include="Assets\Sci-Fi Texture Pack\demoScene\Shaders\LightProjector.shader" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
