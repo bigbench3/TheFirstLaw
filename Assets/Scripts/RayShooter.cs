@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class RayShooter : MonoBehaviour {
 
@@ -78,7 +79,9 @@ public class RayShooter : MonoBehaviour {
                 }
 
                 if (tag == "Relic") {
-                    controller.Win();
+					Scene scene = SceneManager.GetActiveScene ();
+					string levelName = scene.name;
+					controller.Win(levelName);
                 }
             }
         }

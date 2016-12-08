@@ -42,7 +42,11 @@ public class Controller : MonoBehaviour {
 		return matter;
 	}
 
-	public void Win(){
-		winText.text = "YOU WIN";
+	public void Win(string sceneName){
+		if (sceneName == "Tutorial") {
+			SceneManager.LoadScene ("level2");
+		} else {
+			winText.text = "YOU WIN";	
+		}
 	}
 }
