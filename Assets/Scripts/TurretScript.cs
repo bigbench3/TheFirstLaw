@@ -44,7 +44,6 @@ public class TurretScript : MonoBehaviour {
 				}
 			}
 		} else {
-			Debug.Log ("Are you still there?");
 			StopCoroutine ("Charge");
 			charging = false;
 		}

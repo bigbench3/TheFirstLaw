@@ -27,7 +27,7 @@ public class RayShooter : MonoBehaviour {
 
 		controllerObject = GameObject.Find ("Controller");
 		controller = controllerObject.GetComponent<Controller>();
-        initVol = 1;
+        initVol = 0.9f;
         shapes = new ArrayList();
 		typeOfShapes = new ArrayList ();
         index = 0;
@@ -64,6 +64,7 @@ public class RayShooter : MonoBehaviour {
 					Debug.Log (shape.FindVolume (size));
 					GameObject prefab = shape.GetPrefab ();
 					string nameOfShape = shape.GetShape ();
+					Debug.Log ("Shape picked up: " + shape.GetShape() + " With the Shape prefab: " + shape.GetPrefab());
 
 					//If the shape isn't already in your arsenal of shapes, add the prefab for it
 					if (!typeOfShapes.Contains(nameOfShape)) {
