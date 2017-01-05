@@ -53,10 +53,10 @@ public class OpenDoors : MonoBehaviour {
 	{
 		TopDoors.transform.position = Vector3.Lerp (TopDoors.transform.position, 
 			new Vector3(TopDoors.transform.position.x, TopDoors.transform.position.y, TopDoors.transform.position.z) + 
-			new Vector3 (0, 6f,TopDoors.transform.position.z ), 0.45f * Time.deltaTime);
+			new Vector3 (0, 6f,0 ), 0.45f * Time.deltaTime);
 		BottomDoors.transform.position = Vector3.Lerp (BottomDoors.transform.position, 
 			new Vector3(BottomDoors.transform.position.x, BottomDoors.transform.position.y, BottomDoors.transform.position.z) + 
-			new Vector3 (0, -3.310805f, BottomDoors.transform.position.z), 0.45f * Time.deltaTime);
+			new Vector3 (0, -3.310805f, 0), 0.45f * Time.deltaTime);
 
 		// We want to wait till doors reach certain position before they can be closed
 		if(TopDoors.transform.position.y > 3 && BottomDoors.transform.position.y < -2.5f)

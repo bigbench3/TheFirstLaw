@@ -38,6 +38,10 @@ public class FPSInput : MonoBehaviour {
 			speed = BASE_SPEED;
 		}
 
+		if(Input.GetKeyDown (KeyCode.Escape)){
+			
+		}
+
         movement = new Vector3(deltaX, vertSpeed, deltaZ);
         movement *= Time.deltaTime;
         movement = transform.TransformDirection(movement);

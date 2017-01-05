@@ -31,7 +31,7 @@ public class MovingEnemy : MonoBehaviour {
 			inX = true;
 		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		Vector3 pos = transform.position;
@@ -70,7 +70,7 @@ public class MovingEnemy : MonoBehaviour {
 	void OnCollisionEnter(Collision col){
 		GameObject obj = col.gameObject;
 		if (obj.tag == "Player") {
-			SceneManager.LoadScene ("Level2");
+			SceneManager.LoadScene (Application.loadedLevelName);
 		}
 	}
 }

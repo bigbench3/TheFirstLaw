@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour {
-	
+
 	[SerializeField] private Text matterText;
 	[SerializeField] private Text winText;
 	private float matter;
@@ -17,7 +17,7 @@ public class Controller : MonoBehaviour {
 		matterText.text = "Matter: " + matter;
         shapes = new ArrayList();
     }
-	
+
 	// Update is called once per frame
 	void Update () {
     }
@@ -38,15 +38,24 @@ public class Controller : MonoBehaviour {
 
 	}
 
+	//Returns the amount of matter the player currently has
 	public float GetMatter(){
 		return matter;
 	}
 
+	//Changes scene after completing a level
 	public void Win(string sceneName){
-		if (sceneName == "Tutorial") {
-			SceneManager.LoadScene ("level2");
-		} else {
-			winText.text = "YOU WIN";	
+		switch(sceneName){
+			case "Tutorial":
+				SceneManager.LoadScene ("level2");
+				break;
+			case "level2":
+				SceneManager.LoadScene ("level3");
+				break;
+			case "level3":
+				winText.text = "YOU WIN";
+				break;
+
 		}
 	}
 }
